@@ -76,30 +76,32 @@ function checkAnswer(currentLevel){
         canClick = false;
     }
 }
-
-$(document).keypress(function(){
-    if(!isStarted){
-        $("h1").text("Level " + level)
-        nextSequence();
-        playSound(gamePattern[0])
-        isStarted = true
-    }
+$(document).ready(()=> {
+    $(document).keypress(function(){
+        if(!isStarted){
+            $("h1").text("Level " + level)
+            nextSequence();
+            playSound(gamePattern[0])
+            isStarted = true
+        }
+    })
+    
+    $(".btn").click(function(e){
+        if (canClick) {
+            var userChosenColour = $(this).attr("id")
+            userClickedPattern.push(userChosenColour);
+            playSound(userChosenColour)
+            animatePress(userChosenColour)
+            if(userClickedPattern.length === level){    
+                checkAnswer(level)
+            }
+            else{
+                checkAnswer(userClickedPattern.length)
+            }
+        }  
+    })
 })
 
-$(".btn").click(function(e){
-    if (canClick) {
-        var userChosenColour = $(this).attr("id")
-        userClickedPattern.push(userChosenColour);
-        playSound(userChosenColour)
-        animatePress(userChosenColour)
-        if(userClickedPattern.length === level){    
-            checkAnswer(level)
-        }
-        else{
-            checkAnswer(userClickedPattern.length)
-        }
-    }  
-})
 
 
 
